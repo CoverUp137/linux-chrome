@@ -1,0 +1,2 @@
+chrome-linux.zip filter=lfs diff=lfs merge=lfs -text
+chromium-linux-arm64.zip filter=lfs diff=lfs merge=lfs -text
