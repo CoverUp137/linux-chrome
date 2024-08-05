@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 # login.py
-# author: github/svjdck & github.com/icepage/AutoUpdateJdCookie & 小九九 t.me/gdot0
-
 import os
 from pyppeteer import launch
 import aiohttp
@@ -105,14 +103,10 @@ async def logon_main(chromium_path, workList, uid, headless):
 
     async def isSendSMSDirectly(page):
         try:
-            if await page.xpath('//*[@id="app"]/div/div[2]/p/span[3]'):
-                element = await page.xpath('//*[@id="app"]/div/div[2]/p/span[3]')
-                if element:
-                    text = await page.evaluate(
-                        "(element) => element.textContent", element[0]
-                    )
-                    if text == "存在安全风险，请进行手机短信验证":
-                        return True
+            title = await page.title()
+            if title in ['手机语音验证', '手机短信验证']:
+                print('需要' + title)
+                return True  
             return False
         except Exception as e:
             print("isSendSMSDirectly " + str(e))
@@ -729,9 +723,7 @@ async def main(workList, uid, oocr):
             else:
                 print("貌似第一次使用，未找到chrome，正在下载chrome浏览器....")
                 print("文件位于github，请耐心等待，如遇到网络问题可到项目地址手动下载")
-                download_url = "https://mirrors.huaweicloud.com/chromium-browser-snapshots/Linux_x64/588429/chrome-linux.zip"
-           #     download_url = "https://github.com/CoverUp137/linux-chrome-backup/releases/download/v1.0/chrome-884014-linux-x86.zip" #备用
-            #    download_url = "https://github.com/CoverUp137/linux-chrome-backup/releases/download/v1.0/chromium-1088-linux-arm64.zip" #arm64
+                download_url = "https://playwright.azureedge.net/builds/chromium/1088/chromium-linux-arm64.zip"
                 if not os.path.exists(download_path):
                     os.makedirs(download_path, exist_ok=True)
                 target_file = os.path.join(
